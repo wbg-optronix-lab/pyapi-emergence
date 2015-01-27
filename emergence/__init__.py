@@ -65,7 +65,7 @@ class Emergence(object):
         """
         url = self.api_url + '/sample/substrate'
         response = requests.get(url, headers=self.headers)
-        if response.status_code ==200:
+        if response.status_code == 200:
             return json.loads(response.content)
         else:
             return False
@@ -76,7 +76,7 @@ class Emergence(object):
         """
         url = self.api_url + '/sample'
         response = requests.get(url, headers=self.headers)
-        if response.status_code ==200:
+        if response.status_code == 200:
             return json.loads(response.content)
         else:
             return False
@@ -90,7 +90,7 @@ class Emergence(object):
         """
         url = self.api_url + '/sample/{}'.format(uuid)
         response = requests.get(url, headers=self.headers)
-        if response.status_code ==200:
+        if response.status_code == 200:
             return json.loads(response.content)
         else:
             return False
@@ -101,7 +101,7 @@ class Emergence(object):
         """
         url = self.api_url + '/process'
         response = requests.get(url, headers=self.headers)
-        if response.status_code ==200:
+        if response.status_code == 200:
             return json.loads(response.content)
         else:
             return False
@@ -114,7 +114,7 @@ class Emergence(object):
         """
         url = self.api_url + '/process/{}'.format(uuid)
         response = requests.get(url, headers=self.headers)
-        if response.status_code ==200:
+        if response.status_code == 200:
             return json.loads(response.content)
         else:
             return False
@@ -127,8 +127,134 @@ class Emergence(object):
         """
         url = self.api_url + '/process/node/{}'.format(uuid)
         response = requests.get(url, headers=self.headers)
-        if response.status_code ==200:
+        if response.status_code == 200:
             return json.loads(response.content)
         else:
             return False
 
+    ############
+    # D180 API #
+    ############
+
+    def get_growth_list(self):
+        """
+        Returns a list of all growths
+        """
+        url = self.api_url + '/d180/growths'
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def create_growth(self, data):
+        """
+        Create a growth via API
+
+        :param data: JSON dump of data fields for growth model
+        """
+        url = self.api_url + '/d180/growths'
+        response = requests.post(url, data, headers=self.headers)
+        if response.status_code == 201:
+            return True
+        else:
+            return False
+
+    def get_growth(self, pk):
+        """
+        Show details of a specific growth specified by growth PK
+
+        :param pk: ID of growth in database
+        """
+        url = self.api_url + '/d180/growths/{}'.format(pk)
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def update_growth(self, pk, data):
+        """
+        Update parameters of a specific growth specified by growth PK
+        Only updated parameters should be included in data object
+        NB this method uses an HTTP PATCH request, which should be formatted
+        as a list with a single object, where the object is a dictionary of values
+        to update.
+
+        :param pk: ID of growth in database
+        :param data: Single-item List with dict of updated data fields from growth model
+        """
+        url = self.api_url + '/d180/growths/{}'.format(pk)
+        response = requests.patch(url, data, headers=self.headers)
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+
+    def latest_growth(self):
+        """
+        Returns details of the latest growth.
+        """
+        url = self.api_url + '/d180/growths/latest'
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def get_readings_list(self):
+        """
+        Returns a list of all readings for D180 growths
+        """
+        url = self.api_url + '/d180/readings'
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def create_readings(self, data):
+        """
+        Create a reading via API
+
+        :param data: JSON dump of data fields for readings model
+        """
+        url = self.api_url + '/d180/readings'
+        response = requests.post(url, data, headers=self.headers)
+        if response.status_code == 201:
+            return True
+        else:
+            return False
+
+    def get_readings(self, pk):
+        """
+        Show details of a specific reading set specified by readings PK
+
+        :param pk: ID of readings set in database
+        """
+        url = self.api_url + '/d180/readings/{}'.format(pk)
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def update_readings(self, pk, data):
+        """
+        Update parameters of a specific reading set specified by reading set PK
+        Only updated parameters should be included in data object
+        NB this method uses an HTTP PATCH request, which should be formatted
+        as a list with a single object, where the object is a dictionary of values
+        to update.
+
+        :param pk: ID of readings set in database
+        :param data: Single-item List with dict of updated data fields from readings model
+        """
+        url = self.api_url + '/d180/readings/{}'.format(pk)
+        response = requests.patch(url, data, headers=self.headers)
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+
+    
