@@ -5,6 +5,7 @@ pyapi-emergence. A Python wrapper for the Emergence Lab API.
 
 import requests
 import json
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 
 class Emergence(object):
@@ -30,6 +31,8 @@ class Emergence(object):
             pass
         else:
             self.host = 'https://' + self.host
+        if not verify_ssl:
+            requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
         self.verify_ssl = verify_ssl
         self.api_url = self.host + '/api/v0'
@@ -53,7 +56,8 @@ class Emergence(object):
         Returns a list of users in the instance
         """
         url = self.api_url + '/users'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -64,7 +68,8 @@ class Emergence(object):
         Returns a lit of substrates and associated details
         """
         url = self.api_url + '/sample/substrate'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -75,7 +80,8 @@ class Emergence(object):
         Returns a list of samples and associated details
         """
         url = self.api_url + '/sample'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -89,7 +95,8 @@ class Emergence(object):
         :param uuid: UUID of sample
         """
         url = self.api_url + '/sample/{}'.format(uuid)
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -100,7 +107,8 @@ class Emergence(object):
         Returns a list of processes and generic details
         """
         url = self.api_url + '/process'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -113,7 +121,8 @@ class Emergence(object):
         :param uuid: UUID of process
         """
         url = self.api_url + '/process/{}'.format(uuid)
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -126,7 +135,8 @@ class Emergence(object):
         :param uuid: UUID of process node.
         """
         url = self.api_url + '/process/node/{}'.format(uuid)
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -141,7 +151,8 @@ class Emergence(object):
         Returns a list of all growths
         """
         url = self.api_url + '/d180/growths'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -154,7 +165,8 @@ class Emergence(object):
         :param data: JSON dump of data fields for growth model
         """
         url = self.api_url + '/d180/growths'
-        response = requests.post(url, data, headers=self.headers)
+        response = requests.post(url, data, headers=self.headers,
+                                 verify=self.verify_ssl)
         if response.status_code == 201:
             return True
         else:
@@ -167,7 +179,8 @@ class Emergence(object):
         :param pk: ID of growth in database
         """
         url = self.api_url + '/d180/growths/{}'.format(pk)
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -185,7 +198,8 @@ class Emergence(object):
         :param data: Single-item List with dict of updated data fields from growth model
         """
         url = self.api_url + '/d180/growths/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers)
+        response = requests.patch(url, data, headers=self.headers,
+                                  verify=self.verify_ssl)
         if response.status_code == 200:
             return True
         else:
@@ -196,7 +210,8 @@ class Emergence(object):
         Returns details of the latest growth.
         """
         url = self.api_url + '/d180/growths/latest'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -207,7 +222,8 @@ class Emergence(object):
         Returns a list of all readings for D180 growths
         """
         url = self.api_url + '/d180/readings'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -220,7 +236,8 @@ class Emergence(object):
         :param data: JSON dump of data fields for readings model
         """
         url = self.api_url + '/d180/readings'
-        response = requests.post(url, data, headers=self.headers)
+        response = requests.post(url, data, headers=self.headers,
+                                 verify=self.verify_ssl)
         if response.status_code == 201:
             return True
         else:
@@ -233,7 +250,8 @@ class Emergence(object):
         :param pk: ID of readings set in database
         """
         url = self.api_url + '/d180/readings/{}'.format(pk)
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -251,7 +269,8 @@ class Emergence(object):
         :param data: Single-item List with dict of updated data fields from readings model
         """
         url = self.api_url + '/d180/readings/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers)
+        response = requests.patch(url, data, headers=self.headers,
+                                  verify=self.verify_ssl)
         if response.status_code == 200:
             return True
         else:
@@ -266,7 +285,8 @@ class Emergence(object):
         Returns a list of all AFM scans
         """
         url = self.api_url + '/afm'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -279,7 +299,8 @@ class Emergence(object):
         :param data: JSON dump of data fields for AFM model
         """
         url = self.api_url + '/afm'
-        response = requests.post(url, data, headers=self.headers)
+        response = requests.post(url, data, headers=self.headers,
+                                 verify=self.verify_ssl)
         if response.status_code == 201:
             return True
         else:
@@ -292,7 +313,8 @@ class Emergence(object):
         :param pk: ID of AFM in database
         """
         url = self.api_url + '/afm/{}'.format(pk)
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -310,7 +332,8 @@ class Emergence(object):
         :param data: Single-item List with dict of updated data fields from AFM model
         """
         url = self.api_url + '/afm/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers)
+        response = requests.patch(url, data, headers=self.headers,
+                                  verify=self.verify_ssl)
         if response.status_code == 200:
             return True
         else:
@@ -325,7 +348,8 @@ class Emergence(object):
         Returns a list of all SEM scans
         """
         url = self.api_url + '/sem'
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -338,7 +362,8 @@ class Emergence(object):
         :param data: JSON dump of data fields for SEM model
         """
         url = self.api_url + '/sem'
-        response = requests.post(url, data, headers=self.headers)
+        response = requests.post(url, data, headers=self.headers,
+                                 verify=self.verify_ssl)
         if response.status_code == 201:
             return True
         else:
@@ -351,7 +376,8 @@ class Emergence(object):
         :param pk: ID of SEM in database
         """
         url = self.api_url + '/sem/{}'.format(pk)
-        response = requests.get(url, headers=self.headers)
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
         else:
@@ -369,7 +395,8 @@ class Emergence(object):
         :param data: Single-item List with dict of updated data fields from SEM model
         """
         url = self.api_url + '/sem/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers)
+        response = requests.patch(url, data, headers=self.headers,
+                                  verify=self.verify_ssl)
         if response.status_code == 200:
             return True
         else:
