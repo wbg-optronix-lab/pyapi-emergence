@@ -316,4 +316,61 @@ class Emergence(object):
         else:
             return False
 
-    
+    ###########
+    # SEM API #
+    ###########
+
+    def get_sem_list(self):
+        """
+        Returns a list of all SEM scans
+        """
+        url = self.api_url + '/sem'
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def create_sem(self, data):
+        """
+        Create an SEM scan via API
+
+        :param data: JSON dump of data fields for SEM model
+        """
+        url = self.api_url + '/sem'
+        response = requests.post(url, data, headers=self.headers)
+        if response.status_code == 201:
+            return True
+        else:
+            return False
+
+    def get_sem(self, pk):
+        """
+        Show details of a specific SEM specified by SEM PK
+
+        :param pk: ID of SEM in database
+        """
+        url = self.api_url + '/sem/{}'.format(pk)
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def update_sem(self, pk, data):
+        """
+        Update parameters of a specific SEM specified by SEM PK
+        Only updated parameters should be included in data object
+        NB this method uses an HTTP PATCH request, which should be formatted
+        as a list with a single object, where the object is a dictionary of values
+        to update.
+
+        :param pk: ID of SEM in database
+        :param data: Single-item List with dict of updated data fields from SEM model
+        """
+        url = self.api_url + '/sem/{}'.format(pk)
+        response = requests.patch(url, data, headers=self.headers)
+        if response.status_code == 200:
+            return True
+        else:
+            return False
