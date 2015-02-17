@@ -3,8 +3,10 @@
 pyapi-emergence. A Python wrapper for the Emergence Lab API.
 """
 
+import os
 import requests
 import json
+
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 
@@ -60,6 +62,30 @@ class Emergence(object):
                                 verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
+        else:
+            return False
+
+    def get_media_file(self, path, output_dir):
+        """
+        Returns media file from specified path
+
+        :param path: path to file from Emergence
+        :param output_dir: path to save the file
+        """
+        url = self.api_url + '/utility/media' + path
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
+        output_file_name = path.split('/')[-1]
+        if not output_file_name:
+            raise NameError('Path returns empty string')
+        if response.status_code == 200:
+            with open(os.path.join(output_dir, output_file_name), 'wb+') as f:
+                for block in response.iter_content(1024):
+                    if not block:
+                        break
+                    f.write(block)
+                    f.close
+            return True
         else:
             return False
 
