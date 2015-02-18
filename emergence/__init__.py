@@ -49,6 +49,40 @@ class Emergence(object):
     #    """
     #    CURRENTLY NOT SUPPORTED BY SW: TOKEN LOGIN ONLY #
 
+    def get(self, suffix):
+        """
+        Base function.
+        """
+        url = self.api_url + suffix
+        response = requests.get(url, headers=self.headers,
+                                verify=self.verify_ssl)
+        if response.status_code == 200:
+            return json.loads(response.content)
+        else:
+            return False
+
+    def patch(self, suffix, data):
+        """
+        Base function
+        """
+        response = requests.patch(url, data, headers=self.headers,
+                                  verify=self.verify_ssl)
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+
+    def post(self, suffix, data):
+        """
+        Base function
+        """
+        response = requests.post(url, data, headers=self.headers,
+                                  verify=self.verify_ssl)
+        if response.status_code == 201:
+            return True
+        else:
+            return False
+
     ############
     # CORE API #
     ############
@@ -57,13 +91,14 @@ class Emergence(object):
         """
         Returns a list of users in the instance
         """
-        url = self.api_url + '/users'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/users')
+        #url = self.api_url + '/users'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def download_media_file(self, path, output_dir):
         """
@@ -113,25 +148,27 @@ class Emergence(object):
         """
         Returns a lit of substrates and associated details
         """
-        url = self.api_url + '/sample/substrate'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/sample/substrate')
+        #url = self.api_url + '/sample/substrate'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def get_sample_list(self):
         """
         Returns a list of samples and associated details
         """
-        url = self.api_url + '/sample'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/sample')
+        #url = self.api_url + '/sample'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def get_sample(self, uuid):
         """
@@ -140,25 +177,27 @@ class Emergence(object):
 
         :param uuid: UUID of sample
         """
-        url = self.api_url + '/sample/{}'.format(uuid)
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/sample/{}'.format(uuid))
+        #url = self.api_url + '/sample/{}'.format(uuid)
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def get_process_list(self):
         """
         Returns a list of processes and generic details
         """
-        url = self.api_url + '/process'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/process')
+        #url = self.api_url + '/process'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def get_process(self, uuid):
         """
@@ -166,13 +205,14 @@ class Emergence(object):
 
         :param uuid: UUID of process
         """
-        url = self.api_url + '/process/{}'.format(uuid)
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/process/{}'.format(uuid))
+        #url = self.api_url + '/process/{}'.format(uuid)
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def get_process_node(self, uuid):
         """
@@ -180,13 +220,14 @@ class Emergence(object):
 
         :param uuid: UUID of process node.
         """
-        url = self.api_url + '/process/node/{}'.format(uuid)
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/process/node/{}'.format(uuid))
+        #url = self.api_url + '/process/node/{}'.format(uuid)
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     ############
     # D180 API #
@@ -196,13 +237,14 @@ class Emergence(object):
         """
         Returns a list of all growths
         """
-        url = self.api_url + '/d180/growths'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/d180/growths')
+        #url = self.api_url + '/d180/growths'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def create_growth(self, data):
         """
@@ -210,13 +252,14 @@ class Emergence(object):
 
         :param data: JSON dump of data fields for growth model
         """
-        url = self.api_url + '/d180/growths'
-        response = requests.post(url, data, headers=self.headers,
-                                 verify=self.verify_ssl)
-        if response.status_code == 201:
-            return True
-        else:
-            return False
+        return self.post('/d180/growths', data)
+        #url = self.api_url + '/d180/growths'
+        #response = requests.post(url, data, headers=self.headers,
+        #                         verify=self.verify_ssl)
+        #if response.status_code == 201:
+        #    return True
+        #else:
+        #    return False
 
     def get_growth(self, pk):
         """
@@ -224,13 +267,14 @@ class Emergence(object):
 
         :param pk: ID of growth in database
         """
-        url = self.api_url + '/d180/growths/{}'.format(pk)
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/d180/growths/{}'.format(pk))
+        #url = self.api_url + '/d180/growths/{}'.format(pk)
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def update_growth(self, pk, data):
         """
@@ -243,37 +287,40 @@ class Emergence(object):
         :param pk: ID of growth in database
         :param data: Single-item List with dict of updated data fields from growth model
         """
-        url = self.api_url + '/d180/growths/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers,
-                                  verify=self.verify_ssl)
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return self.patch('/d180/growths/{}'.format(pk), data)
+        #url = self.api_url + '/d180/growths/{}'.format(pk)
+        #response = requests.patch(url, data, headers=self.headers,
+        #                          verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return True
+        #else:
+        #    return False
 
     def latest_growth(self):
         """
         Returns details of the latest growth.
         """
-        url = self.api_url + '/d180/growths/latest'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/d180/growths/latest')
+        #url = self.api_url + '/d180/growths/latest'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def get_readings_list(self):
         """
         Returns a list of all readings for D180 growths
         """
-        url = self.api_url + '/d180/readings'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/d180/readings')
+        #url = self.api_url + '/d180/readings'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def create_readings(self, data):
         """
@@ -281,13 +328,14 @@ class Emergence(object):
 
         :param data: JSON dump of data fields for readings model
         """
-        url = self.api_url + '/d180/readings'
-        response = requests.post(url, data, headers=self.headers,
-                                 verify=self.verify_ssl)
-        if response.status_code == 201:
-            return True
-        else:
-            return False
+        return self.post('/d180/readings', data)
+        #url = self.api_url + '/d180/readings'
+        #response = requests.post(url, data, headers=self.headers,
+        #                         verify=self.verify_ssl)
+        #if response.status_code == 201:
+        #    return True
+        #else:
+        #    return False
 
     def get_readings(self, pk):
         """
@@ -295,13 +343,14 @@ class Emergence(object):
 
         :param pk: ID of readings set in database
         """
-        url = self.api_url + '/d180/readings/{}'.format(pk)
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/d180/readings/{}'.format(pk))
+        #url = self.api_url + '/d180/readings/{}'.format(pk)
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def update_readings(self, pk, data):
         """
@@ -314,13 +363,14 @@ class Emergence(object):
         :param pk: ID of readings set in database
         :param data: Single-item List with dict of updated data fields from readings model
         """
-        url = self.api_url + '/d180/readings/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers,
-                                  verify=self.verify_ssl)
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return self.patch('/d180/readings/{}'.format(pk), data)
+        #url = self.api_url + '/d180/readings/{}'.format(pk)
+        #response = requests.patch(url, data, headers=self.headers,
+        #                          verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return True
+        #else:
+        #    return False
 
     ###########
     # AFM API #
@@ -330,13 +380,14 @@ class Emergence(object):
         """
         Returns a list of all AFM scans
         """
-        url = self.api_url + '/afm'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/afm')
+        #url = self.api_url + '/afm'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def create_afm(self, data):
         """
@@ -344,13 +395,14 @@ class Emergence(object):
 
         :param data: JSON dump of data fields for AFM model
         """
-        url = self.api_url + '/afm'
-        response = requests.post(url, data, headers=self.headers,
-                                 verify=self.verify_ssl)
-        if response.status_code == 201:
-            return True
-        else:
-            return False
+        return self.post('/afm', data)
+        #url = self.api_url + '/afm'
+        #response = requests.post(url, data, headers=self.headers,
+        #                         verify=self.verify_ssl)
+        #if response.status_code == 201:
+        #    return True
+        #else:
+        #    return False
 
     def get_afm(self, pk):
         """
@@ -358,13 +410,14 @@ class Emergence(object):
 
         :param pk: ID of AFM in database
         """
-        url = self.api_url + '/afm/{}'.format(pk)
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/afm/{}'.format(pk))
+        #url = self.api_url + '/afm/{}'.format(pk)
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def update_afm(self, pk, data):
         """
@@ -377,13 +430,14 @@ class Emergence(object):
         :param pk: ID of AFM in database
         :param data: Single-item List with dict of updated data fields from AFM model
         """
-        url = self.api_url + '/afm/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers,
-                                  verify=self.verify_ssl)
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return self.patch('/afm/{}'.format(pk), data)
+        #url = self.api_url + '/afm/{}'.format(pk)
+        #response = requests.patch(url, data, headers=self.headers,
+        #                          verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return True
+        #else:
+        #    return False
 
     ###########
     # SEM API #
@@ -393,13 +447,14 @@ class Emergence(object):
         """
         Returns a list of all SEM scans
         """
-        url = self.api_url + '/sem'
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/sem')
+        #url = self.api_url + '/sem'
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def create_sem(self, data):
         """
@@ -407,13 +462,14 @@ class Emergence(object):
 
         :param data: JSON dump of data fields for SEM model
         """
-        url = self.api_url + '/sem'
-        response = requests.post(url, data, headers=self.headers,
-                                 verify=self.verify_ssl)
-        if response.status_code == 201:
-            return True
-        else:
-            return False
+        return self.post('/sem', data)
+        #url = self.api_url + '/sem'
+        #response = requests.post(url, data, headers=self.headers,
+        #                         verify=self.verify_ssl)
+        #if response.status_code == 201:
+        #    return True
+        #else:
+        #    return False
 
     def get_sem(self, pk):
         """
@@ -421,13 +477,14 @@ class Emergence(object):
 
         :param pk: ID of SEM in database
         """
-        url = self.api_url + '/sem/{}'.format(pk)
-        response = requests.get(url, headers=self.headers,
-                                verify=self.verify_ssl)
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            return False
+        return self.get('/sem/{}'.format(pk))
+        #url = self.api_url + '/sem/{}'.format(pk)
+        #response = requests.get(url, headers=self.headers,
+        #                        verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return json.loads(response.content)
+        #else:
+        #    return False
 
     def update_sem(self, pk, data):
         """
@@ -440,10 +497,11 @@ class Emergence(object):
         :param pk: ID of SEM in database
         :param data: Single-item List with dict of updated data fields from SEM model
         """
-        url = self.api_url + '/sem/{}'.format(pk)
-        response = requests.patch(url, data, headers=self.headers,
-                                  verify=self.verify_ssl)
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return self.patch('/sem/{}'.format(pk), data)
+        #url = self.api_url + '/sem/{}'.format(pk)
+        #response = requests.patch(url, data, headers=self.headers,
+        #                          verify=self.verify_ssl)
+        #if response.status_code == 200:
+        #    return True
+        #else:
+        #    return False
