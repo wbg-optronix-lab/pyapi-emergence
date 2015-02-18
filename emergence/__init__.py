@@ -152,6 +152,15 @@ class Emergence(object):
         """
         return self.get('/sample/{}'.format(uuid))
 
+    def get_sample_tree(self, uuid):
+        """
+        Show details for a specific sample specified by uuid.
+        Retrieves tree view.
+
+        :param uuid: UUID of sample
+        """
+        return self.get('/sample/{}/node/tree/'.format(uuid))
+
     def get_process_list(self):
         """
         Returns a list of processes and generic details
@@ -173,6 +182,14 @@ class Emergence(object):
         :param uuid: UUID of process node.
         """
         return self.get('/process/node/{}'.format(uuid))
+
+    def get_process_samples(self, uuid):
+        """
+        Show samples within a specific process specified by process uuid.
+
+        :param uuid: UUID of process node.
+        """
+        return self.get('/sample/by_process/{}'.format(uuid))
 
     ############
     # D180 API #
