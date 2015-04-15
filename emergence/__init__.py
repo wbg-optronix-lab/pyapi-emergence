@@ -65,7 +65,9 @@ class Emergence(object):
         """
         Base function
         """
-        response = requests.patch(url, data, headers=self.headers,
+        url = self.api_url + suffix
+        response = requests.patch(url, data=json.dumps(data),
+                                  headers=self.headers,
                                   verify=self.verify_ssl)
         if response.status_code == 200:
             return True
@@ -76,8 +78,10 @@ class Emergence(object):
         """
         Base function
         """
-        response = requests.post(url, data, headers=self.headers,
-                                  verify=self.verify_ssl)
+        url = self.api_url + suffix
+        response = requests.post(url, data=json.dumps(data),
+                                 headers=self.headers,
+                                 verify=self.verify_ssl)
         if response.status_code == 201:
             return True
         else:
