@@ -208,13 +208,13 @@ class Emergence(object):
     # D180 API #
     ############
 
-    def get_growth_list(self):
+    def get_d180_growth_list(self):
         """
         Returns a list of all growths
         """
         return self.get('/d180/growths')
 
-    def create_growth(self, data):
+    def create_d180_growth(self, data):
         """
         Create a growth via API
 
@@ -222,7 +222,7 @@ class Emergence(object):
         """
         return self.post('/d180/growths', data)
 
-    def get_growth(self, pk):
+    def get_d180_growth(self, pk):
         """
         Show details of a specific growth specified by growth PK
 
@@ -230,7 +230,7 @@ class Emergence(object):
         """
         return self.get('/d180/growths/{}'.format(pk))
 
-    def update_growth(self, pk, data):
+    def update_d180_growth(self, pk, data):
         """
         Update parameters of a specific growth specified by growth PK
         Only updated parameters should be included in data object
@@ -243,19 +243,19 @@ class Emergence(object):
         """
         return self.patch('/d180/growths/{}'.format(pk), data)
 
-    def latest_growth(self):
+    def latest_d180_growth(self):
         """
         Returns details of the latest growth.
         """
         return self.get('/d180/growths/latest')
 
-    def get_readings_list(self):
+    def get_d180_readings_list(self):
         """
         Returns a list of all readings for D180 growths
         """
         return self.get('/d180/readings')
 
-    def create_readings(self, data):
+    def create_d180_readings(self, data):
         """
         Create a reading via API
 
@@ -263,7 +263,7 @@ class Emergence(object):
         """
         return self.post('/d180/readings', data)
 
-    def get_readings(self, pk):
+    def get_d180_readings(self, pk):
         """
         Show details of a specific reading set specified by readings PK
 
@@ -271,7 +271,7 @@ class Emergence(object):
         """
         return self.get('/d180/readings/{}'.format(pk))
 
-    def update_readings(self, pk, data):
+    def update_d180_readings(self, pk, data):
         """
         Update parameters of a specific reading set specified by reading set PK
         Only updated parameters should be included in data object
