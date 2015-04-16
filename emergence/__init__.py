@@ -58,8 +58,7 @@ class Emergence(object):
                                 verify=self.verify_ssl)
         if response.status_code == 200:
             return json.loads(response.content)
-        else:
-            return False
+        return response
 
     def patch(self, suffix, data):
         """
@@ -69,10 +68,7 @@ class Emergence(object):
         response = requests.patch(url, data=json.dumps(data),
                                   headers=self.headers,
                                   verify=self.verify_ssl)
-        if response.status_code == 200:
-            return True
-        else:
-            return False
+        return response
 
     def post(self, suffix, data):
         """
@@ -82,10 +78,7 @@ class Emergence(object):
         response = requests.post(url, data=json.dumps(data),
                                  headers=self.headers,
                                  verify=self.verify_ssl)
-        if response.status_code == 201:
-            return True
-        else:
-            return False
+        return response
 
     ############
     # CORE API #
