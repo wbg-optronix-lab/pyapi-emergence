@@ -120,7 +120,7 @@ class Emergence(object):
 
         :param path: path to file from Emergence
         """
-        url = self.api_url + '/utility/media' + path
+        url = self.api_url + '/utility/media/' + path
         response = requests.get(url, headers=self.headers,
                                 verify=self.verify_ssl)
         if response.status_code == 200:
@@ -135,7 +135,7 @@ class Emergence(object):
         :param uuid: UUID of process for which to get datafiles
         """
         return self.get('/process/{}/files'.format(uuid))
-    
+
 
     def get_substrate_list(self):
         """
