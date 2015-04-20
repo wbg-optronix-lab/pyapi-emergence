@@ -128,6 +128,15 @@ class Emergence(object):
         else:
             return False
 
+    def get_process_files(self, uuid):
+        """
+        Returns a list of files associated with a process
+
+        :param uuid: UUID of process for which to get datafiles
+        """
+        return self.get('/process/{}/files'.format(uuid))
+    
+
     def get_substrate_list(self):
         """
         Returns a lit of substrates and associated details
