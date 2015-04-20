@@ -97,7 +97,7 @@ class Emergence(object):
         :param path: path to file from Emergence
         :param output_dir: path to save the file
         """
-        url = self.api_url + '/utility/media' + path
+        url = self.api_url + '/utility/media/' + path
         response = requests.get(url, headers=self.headers,
                                 verify=self.verify_ssl)
         output_file_name = path.split('/')[-1]
